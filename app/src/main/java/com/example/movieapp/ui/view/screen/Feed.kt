@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
@@ -57,6 +58,7 @@ fun FeedScreen(
         modifier = Modifier.systemBarsPadding()
     ) {
         ProvideWindowInsets(consumeWindowInsets = true, windowInsetsAnimationsEnabled = true) {
+
             MovieAppTheme {
                 Column(
                     modifier = Modifier.fillMaxSize()
@@ -123,12 +125,19 @@ fun MovieCorousel(modifier: Modifier = Modifier, viewModel: NetworkViewModel) {
     val list = viewModel.movies.collectAsLazyPagingItems()
     val pagerState = rememberPagerState()
 
+    Text(
+        text = "Top Movies",
+        fontSize = 25.sp,
+        color = MaterialTheme.colors.onPrimary,
+        fontWeight = FontWeight.W500,
+        modifier = Modifier.padding(start = 20.dp)
+    )
     HorizontalPager(
         count = list.itemCount,
-        contentPadding = PaddingValues(horizontal = 44.dp, vertical = 5.dp),
+        contentPadding = PaddingValues(horizontal = 32.dp, vertical = 5.dp),
         modifier = modifier
             .fillMaxWidth()
-            .height(500.dp),
+            .height(510.dp),
         state = pagerState
     ) { page ->
         Column(
@@ -149,7 +158,7 @@ fun MovieCorousel(modifier: Modifier = Modifier, viewModel: NetworkViewModel) {
                             scaleY = scale
                         }
                         alpha = lerp(
-                            start = 0.85f,
+                            start = 0.65f,
                             stop = 1f,
                             fraction = 1f - pageOffset.coerceIn(0f, 1f)
                         )
@@ -168,7 +177,6 @@ fun MovieCorousel(modifier: Modifier = Modifier, viewModel: NetworkViewModel) {
                             crossfade(true)
                         }
                     )
-                    val painterState = painter.state
                     Image(
                         painter = painter,
                         contentDescription = null,
@@ -202,39 +210,12 @@ fun MovieCorousel(modifier: Modifier = Modifier, viewModel: NetworkViewModel) {
             Text(
                 text = list[page]?.original_title ?: "",
                 fontSize = 20.sp,
+                maxLines = 2,
                 fontWeight = FontWeight.W500,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(start = 10.dp)
             )
         }
     }
 }
 
-
-//lazyMovieItems.apply {
-//    when {
-//        loadState.refresh is LoadState.Loading -> {
-//            item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
-//        }
-//        loadState.append is LoadState.Loading -> {
-//            item { LoadingItem() }
-//        }
-//        loadState.refresh is LoadState.Error -> {
-//            val e = lazyMovieItems.loadState.refresh as LoadState.Error
-//            item {
-//                ErrorItem(
-//                    message = e.error.localizedMessage!!,
-//                    modifier = Modifier.fillParentMaxSize(),
-//                    onClickRetry = { retry() }
-//                )
-//            }
-//        }
-//        loadState.append is LoadState.Error -> {
-//            val e = lazyMovieItems.loadState.append as LoadState.Error
-//            item {
-//                ErrorItem(
-//                    message = e.error.localizedMessage!!,
-//                    onClickRetry = { retry() }
-//                )
-//            }
-//        }
-//    }
-//}
