@@ -28,8 +28,9 @@ fun BottomBar(
     onClick: (BottomBarItem) -> Unit,
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
+
     BottomNavigation(
-        modifier = Modifier.clip(RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)),
+        modifier = modifier.clip(RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)),
         backgroundColor = Color.White,
         elevation = 5.dp,
         contentPadding = PaddingValues(vertical = 10.dp)

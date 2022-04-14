@@ -17,38 +17,8 @@ import com.google.accompanist.insets.ui.Scaffold
 
 @Composable
 fun MainScreen(viewModel: NetworkViewModel,networkConnectionLiveData: NetworkConnectionLiveData) {
-    val navController = rememberNavController()
-    val scaffoldState = rememberScaffoldState()
-    Scaffold(
-        bottomBar = {
-            BottomBar(
-                list = listOf(
-                    BottomBarItem(
-                        "Feed",
-                        BottomBarScreen.Feed.route,
-                        Icons.Default.Home,
-                    ),
-                    BottomBarItem(
-                        "Saved",
-                        BottomBarScreen.Saved.route,
-                        Icons.Default.Favorite,
-                    ),
-                    BottomBarItem(
-                        "Settings",
-                        BottomBarScreen.Settings.route,
-                        Icons.Default.Settings,
-                    ),
-                ),
-                navController = navController,
-                onClick = {
-                    navController.navigate(it.route)
-                }
-            )
-        },
-        scaffoldState = scaffoldState
-    ) {
-        BottomNavGraph(navController = navController,viewModel,networkConnectionLiveData)
-    }
+
+
 }
 
 

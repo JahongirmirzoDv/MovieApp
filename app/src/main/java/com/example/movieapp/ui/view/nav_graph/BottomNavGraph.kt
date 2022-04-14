@@ -17,12 +17,14 @@ fun BottomNavGraph(
     viewModel: NetworkViewModel,
     networkConnectionLiveData: NetworkConnectionLiveData,
 ) {
+
+
     NavHost(
         navController = navController,
         startDestination = BottomBarScreen.Feed.route
     ) {
         composable(route = BottomBarScreen.Feed.route) {
-            FeedScreen(networkConnectionLiveData, viewModel)
+            FeedScreen(networkConnectionLiveData, viewModel, navController)
         }
         composable(route = BottomBarScreen.Saved.route) {
             SavedScreen()

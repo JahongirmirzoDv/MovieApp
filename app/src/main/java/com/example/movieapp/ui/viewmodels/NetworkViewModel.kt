@@ -9,6 +9,7 @@ import androidx.paging.PagingData
 import com.example.movieapp.data.api.ApiService
 import com.example.movieapp.data.model.now_playing.Result
 import com.example.movieapp.data.paging.NowPlayingPaging
+import com.example.movieapp.data.paging.TopRatedPaging
 import com.example.movieapp.ui.intent.MainIntent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +27,12 @@ class NetworkViewModel @Inject constructor(
         NowPlayingPaging(apiService)
     }.flow
 
+    @OptIn(ExperimentalPagingApi::class)
+    val top_rated: Flow<PagingData<com.example.movieapp.data.model.top_rated.Result>> =
+        Pager(PagingConfig(pageSize = 20)) {
+            TopRatedPaging(apiService)
+        }.flow
+
     init {
         handleIntent()
     }
@@ -35,6 +42,7 @@ class NetworkViewModel @Inject constructor(
             channel.consumeAsFlow().collect {
                 when (it) {
                     is MainIntent.NowPlaying -> movies
+                    is MainIntent.TopRated -> top_rated
                     else -> {}
                 }
             }

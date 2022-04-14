@@ -8,8 +8,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomBarScreen(
     val route: String,
-    val title: String,
-    val icon: ImageVector,
+    val title: String?,
+    val icon: ImageVector?,
 ) {
     object Feed : BottomBarScreen(
         route = "home",
@@ -28,4 +28,5 @@ sealed class BottomBarScreen(
         title = "Settings",
         icon = Icons.Default.Settings
     )
+
 }
